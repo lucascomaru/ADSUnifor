@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios em JavaScript</title>
+</head>
+<body>
+    <h1>Ambientes desenv de software</h1>
+
+    <h2>Fibonacci</h2>
+    <label for="fibonacciInput">Número de termos da sequência de Fibonacci:</label>
+    <input type="number" id="fibonacciInput">
+    <button onclick="calcularFibonacci()">Calcular</button>
+    <p id="fibonacciOutput"></p>
+
+    <h2>Contador de Valores Inteiros</h2>
+    <label for="primeiroDadoInput">Primeiro número:</label>
+    <input type="number" id="primeiroDadoInput">
+    <label for="NInput">Segundo número:</label>
+    <input type="number" id="NInput">
+    <button onclick="contarValoresInteiros()">Calcular</button>
+    <p id="valoresInteirosOutput"></p>
+
+    <h2>Máximo Divisor Comum (MDC)</h2>
+    <label for="numero1Input">Primeiro número:</label>
+    <input type="number" id="numero1Input">
+    <label for="numero2Input">Segundo número:</label>
+    <input type="number" id="numero2Input">
+    <button onclick="calcularMDC()">Calcular</button>
+    <p id="mdcOutput"></p>
+
+    <h2>Ordenação de Array</h2>
+    <label for="arrayInput">Array (separe os números por vírgula):</label>
+    <input type="text" id="arrayInput">
+    <button onclick="quicksortArray()">Ordenar</button>
+    <p id="quicksortOutput"></p>
+
+    <h2>Somatório de Números</h2>
+    <label for="numerosInput">Números (separe os números por vírgula):</label>
+    <input type="text" id="numerosInput">
+    <button onclick="calcularSomatorio()">Calcular</button>
+    <p id="somatorioOutput"></p>
+
+    <h2>Verificar Número Primo</h2>
+    <label for="numeroPrimoInput">Número:</label>
+    <input type="number" id="numeroPrimoInput">
+    <button onclick="verificarNumeroPrimo()">Verificar</button>
+    <p id="numeroPrimoOutput"></p>
+
+    <script>
+        function calcularFibonacci() {
+            const n = parseInt(document.getElementById('fibonacciInput').value);
+            let sequencia = [0, 1];
+
+            for (let i = 2; i < n; i++) {
+                sequencia[i] = sequencia[i - 1] + sequencia[i - 2];
+            }
+
+            document.getElementById('fibonacciOutput').textContent = `Os primeiros ${n} termos da sequência de Fibonacci são: ${sequencia}`;
+        }
+
+        function contarValoresInteiros() {
+            const primeiroDado = parseInt(document.getElementById('primeiroDadoInput').value);
+            const N = parseInt(document.getElementById('NInput').value);
+            let contador = 0;
+
+            for (let i = primeiroDado; i <= N; i++) {
+                contador++;
+            }
+
+            document.getElementById('valoresInteirosOutput').textContent = `Existem ${contador} valores inteiros entre ${primeiroDado} e ${N}.`;
+        }
+
+        function calcularMDC() {
+            const numero1 = parseInt(document.getElementById('numero1Input').value);
+            const numero2 = parseInt(document.getElementById('numero2Input').value);
+            let a = numero1;
+            let b = numero2;
+            while (b !== 0) {
+                const temp = b;
+                b = a % b;
+                a = temp;
+            }
+            document.getElementById('mdcOutput').textContent = `O MDC de ${numero1} e ${numero2} é: ${a}`;
+        }
+
+        function quicksortArray() {
+            const arrayParaOrdenar = document.getElementById('arrayInput').value.split(',').map(num => parseInt(num.trim()));
+            const arrayOrdenado = quicksort(arrayParaOrdenar);
+            document.getElementById('quicksortOutput').textContent = `Array Ordenado: ${arrayOrdenado}`;
+        }
+
+        function calcularSomatorio() {
+            const numeros = document.getElementById('numerosInput').value.split(',').map(num => parseInt(num.trim()));
+            let somatorio = 0;
+            for (let i = 0; i < numeros.length; i++) {
+                somatorio += numeros[i];
+            }
+            document.getElementById('somatorioOutput').textContent = `O somatório dos números é: ${somatorio}`;
+        }
+
+        function quicksort(array) {
+            if (array.length <= 1) return array;
+            const pivo = array[0];
+            const menores = [];
+            const maiores = [];
+            for (let i = 1; i < array.length; i++) {
+                if (array[i] < pivo) {
+                    menores.push(array[i]);
+                } else {
+                    maiores.push(array[i]);
+                }
+            }
+            return [...quicksort(menores), pivo, ...quicksort(maiores)];
+        }
+
+        function ehPrimo(numero) {
+            if (numero <= 1) {
+                return false;
+            }
+
+            for (let i = 2; i < numero; i++) {
+                if (numero % i === 0) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function verificarNumeroPrimo() {
+            const numero = parseInt(document.getElementById('numeroPrimoInput').value);
+            const resultado = ehPrimo(numero);
+
+            if (resultado) {
+                document.getElementById('numeroPrimoOutput').textContent = `${numero} é um número primo.`;
+            } else {
+                document.getElementById('numeroPrimoOutput').textContent = `${numero} não é um número primo.`;
+            }
+        }
+        
+    </script>
+</body>
+</html>
